@@ -1,0 +1,85 @@
+*{
+    margin:0px;
+    padding: 0px;
+    scroll-behavior: smooth;
+}
+
+.navbar{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(41, 39, 39);
+    color: white;
+}
+.navbar img{
+    width:170px;
+    margin:3px 10px;
+
+}
+.navbar h1{
+    font-size: 70px;
+}
+.name{
+    
+    width: 50vw;
+    padding: 32px 0;
+    margin: 5px auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(134, 133, 133);
+    color: black;
+    font-weight: bold;
+}
+.name h2 {
+    margin-left: 15px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight:bolder;
+}
+.name h3 {
+    margin-left: 15px;
+    margin-bottom: 10px;
+    font-size: 27px;
+    font-weight:bolder;
+}
+.name ol {
+    margin-top: 13px;
+    }
+.name ol li{
+    text-decoration: none;
+    list-style:none;
+    }
+    .name ol li a{
+        text-decoration: none;
+        color: black;
+        font-size: 25px;
+        margin-left: 15px;
+        }
+.container{
+    /* background-color: red; */
+    width: 50vw;
+    padding: 32px 0;
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+.container ol{
+    font-size: 30px;
+}
+
+.container li p{
+    font-size: 30px;
+}
+.container li code{
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+.toolbar-item button{
+    cursor: pointer !important;
+    color: white !important;
+    border: 1px solid white !important;
+    border-radius: 15px !important;
+    padding: 3px 5px !important;
+    font-size: 20px !important;
+    background: none !important;
+    margin-right: 23px !important;
+}

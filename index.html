@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="prism.css">
+    <script src="prism.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Computer Organization and Architecture by SK</title>
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <span>
+            <img src="logo.jpg" alt="logo">
+        </span>
+        <h1>Cheatsheet For All Verilog Code</h1>
+    </nav>
+    <div class="name">
+        <h2> Note : Here you have to select the topic for which you need Verilog code and you will be directly
+            shifted to that code. In the coding area in the right-hand side top corner, you will find a button named
+            "Copy", you can just select that and copy the entire code to your clipboard. </h2>
+        <h3> Advice : Open in laptop</h3>
+        <hr>
+        <hr>
+        <ol>
+            <li id="verilog-1"><a href="#1">1. "2:1 mux using gate-level modeling"</a> </li>
+            <li id="verilog-2"><a href="#2">2. "4:1 mux using gate-level modeling"</a></li>
+            <li id="verilog-2"><a href="#3">3. "4:1 mux using TristateBuffers"</a></li>
+            <li id="verilog-2"><a href="#4">4. "4:1 mux using IF_ELSE"</a></li>
+            <li id="verilog-2"><a href="#5">5. "4:1 mux using Behavioral modeling(CASE STATEMENT)"</a></li>
+            <li id="verilog-3"><a href="#6">6. "4:1 mux(Input = 8 bit) using ternary"</a></li>
+            <li id="verilog-3"><a href="#7">7. "4:1 mux(Input = 8 bit) using Behavioral modeling(CASE STATEMENT)"</a>
+            </li>
+            <li id="verilog-3"><a href="#8">8. "8:1 mux using 2:1"</a></li>
+            <li id="verilog-4"><a href="#9">9. "8:1 mux using 4:1"</a></li><br>
+            <li id="verilog-5"><a href="#10">10. "Decoder2to4"</a></li>
+            <li id="verilog-5"><a href="#11">11. "Decoder3to8"</a></li>
+            <li id="verilog-5"><a href="#12">12. "4*16 decoder using 2*4"</a></li>
+            <li id="verilog-5"><a href="#13">13. "4*16 decoder using 3*8"</a></li><br>
+            <li id="verilog-5"><a href="#14">14. "Full Adder Using Decoder and OR-gat"</a></li>
+            <li id="verilog-5"><a href="#15">15. "4-bit_RCA"</a></li>
+            <li id="verilog-5"><a href="#16">16. " D flip flop"</a></li><br>
+            <li id="verilog-5"><a href="#17">17. "Counter_4bit"</a></li>
+            <li id="verilog-5"><a href="#18">18. "Counter_4bit_(Time generator)"</a></li><br>
+            <li id="verilog-5"><a href="#19">19. "Decoder_4to16with_Enable"</a></li>
+            <li id="verilog-5"><a href="#20">20. "MUX16to1_8bit"</a></li>
+            <li id="verilog-5"><a href="#21">21. "DFF_1bit_Register"</a></li>
+            <li id="verilog-5"><a href="#22">22. "MUX2to1_dataFlow Modeling"</a></li>
+            <li id="verilog-5"><a href="#23">23. "Register_1bit_SynR"</a></li>
+            <li id="verilog-5"><a href="#24">24. "Register_8bit"</a></li>
+            <li id="verilog-5"><a href="#25">25. "RegisterFile"</a></li><br>
+            <li id="verilog-5"><a href="#26">26. "Shifter_left"</a></li>
+            <li id="verilog-5"><a href="#27">27. "Shifter_right"</a></li>
+            <li id="verilog-5"><a href="#28">28. "Memory Generic Code(Data_memory)"</a></li>
+            <li id="verilog-5"><a href="#29">29. "unsigned_comparator_4bit"</a></li><br>
+
+            <li id="verilog-5"><a href="#30">30. "FSM_Method1"</a></li>
+            <li id="verilog-5"><a href="#31">31. "FSM_Method2"</a></li>
+            <li id="verilog-5"><a href="#32">32. "FSM_Method3"</a></li>
+        </ol>
+    </div>
+
+    <div class="container">
+        <ol>
+
+
+            <li id="1"><b>2:1 mux using gate-level modeling</b>
+                <pre class="language-js">
+<code>module m21(Y, D0, D1, S);
+output Y;
+input D0, D1, S;
+wire T1, T2, Sbar;
+and (T1, D1, S), (T2, D0, Sbar);
+not (Sbar, S);
+or (Y, T1, T2);
+endmodule </code></pre>
+            </li>
+
+
+
+            <li id="2"><b>4:1 mux using gate-level modeling</b>
+                <pre class="language-js">
+<code>module m41(out, a, b, c, d, s0, s1);
+output out;
+input a, b, c, d, s0, s1;
+wire sobar, s1bar, T1, T2, T3, T4;
+not (s0bar, s0), (s1bar, s1);
+and (T1, a, s0bar, s1bar);
+and (T2, b, s0bar, s1);
+and (T3, c, s0, s1bar);
+and (T4, d, s0, s1);
+or(out, T1, T2, T3, T4);
+endmodule</code></pre>
+            </li>
+
+
+            <li id="3"><b>4:1 mux using TristateBuffers</b>
+                <pre class="language-js">
+<code>module MUX4to1_usingTristateBuffers(I, S, Y);
+input [3:0] I;
+input [1:0] S;
+output wire Y;
+///gate-level modeling//////////
+///Structural modeling///////////
+bufif1 inst0(Y, I[0], (~S[1]&~S[0]));
+bufif1 inst1(Y, I[1], (~S[1]&S[0]));
+bufif1 inst2(Y, I[2], (S[1]&~S[0]));
+bufif1 inst3(Y, I[3], (S[1]&S[0]));
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="4"><b>4:1 mux using IF_ELSE</b>
+                <pre class="language-js">
+<code>module MUX4to1_usingIF_ELSE(I, S, Y);
+input [3:0] I;
+input [1:0] S;
+output reg Y;
+///Behavioral modeling///////////
+////Here the * will be equivalent to S and I both
+always@(*)
+  begin
+    if (S==2'b00)
+      Y = I[0];
+    else if (S==2'b01)
+      Y = I[1];
+    else if (S==2'b10)
+      Y = I[2];
+    else
+      Y = I[3];
+end
+endmodul</code></pre>
+            </li>
+
+
+
+            <li id="5"><b>4:1 mux using Behavioral modeling(CASE STATEMENT)</b>
+                <pre class="language-js">
+<code>module MUX4to1BehvCase(I, S, Y);
+input [3:0] I;
+input [1:0] S;
+output reg Y;
+///Behavioral modeling///////////
+////Here the * will be equivalent to S and I both
+always@(*)
+begin
+   case (S)
+    2'b00: Y = I[0];
+    2'b01: Y = I[1];
+    2'b10: Y = I[2];
+    default: Y = I[3];
+   endcase
+end
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="6"><b>4:1 mux(Input = 8 bit) using ternary</b>
+                <pre class="language-js">
+<code>input [7:0] A, B, C, D;
+input [1:0] S;
+output wire [7:0] Y;
+////We can also use the following data-flow methods
+assign Y = (S==2'b00)? A : ((S==2'b01)? B : ((S==2'b10)? C : D));
+
+///assign Y = (S[1]==1'b0)? (S[0]==1'b0? A:B) : (S[0]==1'b0? C:D);
+////Or we can use/////////
+
+///assign Y = (S[1]==1'b1)? (S[0]==1'b1? D:C) : (S[0]==1'b1? B:A);
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="7"><b>4:1 mux(Input = 8 bit) using Behavioral modeling(CASE STATEMENT)</b>
+                <pre class="language-js">
+<code>module MUX4to1_8_bit_Behavioral(A, B, C, D, S, Y);
+input [7:0] A, B, C, D;
+input [1:0] S;
+output reg [7:0] Y;
+///Behavioral modeling///////////
+////Here the * will be equivalent to S, A, B, C, D
+always@(*)
+begin
+   case (S)
+    2'b00: Y = A;
+    2'b01: Y = B;
+    2'b10: Y = C;
+    default: Y = D;
+   endcase
+end
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="8"><b>8:1 mux using 2:1</b>
+                <pre class="language-js">
+<code>////////////////////////////////////////////////////////////////
+module 2to1Mux(I,Y,S)
+input [1:0]I;
+output wire Y;
+input S;
+assign Y= (S==1'b0)?I[0]:I[1];
+endmodule
+    
+module 8to1Mux(I,Y,S)
+input [7:0] I;
+input [2:0] S;
+output wire Y;
+wire temp1,temp2,temp3,temp4,temp5,temp6;
+2to1Mux({I[1], I[0]},temp1,S[0]);
+2to1Mux({I[3], I[2]},temp2,S[0]);
+2to1Mux({I[5], I[4]},temp3,S[0]);
+2to1Mux({I[7], I[6]},temp4,S[0]);
+2to1Mux({temp2,temp1}},temp5,S[1]);
+2to1Mux({temp4,temp3},temp6,S[1]);
+2to1Mux({temp6,temp5},Y,S[2]);
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="9"><b>8:1 mux using 4:1</b>
+                <pre class="language-js">
+<code>module m21(Y, D0, D1, S);
+////////////////////////////////////////////////////////////////
+module 4to1Mux(I,Y,S)
+input [3:0] I;
+input [1:0] S;
+output wire Y;
+always@(*)
+begin
+case(S)
+2'b00: I[0];
+2'b01: I[1];
+2'b10: I[2];
+default : I[3];
+endcase;
+end
+endmodule
+      
+module 8to1Mux(I,Y,S)
+input [7:0]I;
+input [2:0];
+output wire Y;
+wire temp1, temp2;
+4to1Mux(I[3:0], temp1,S[1:0]);
+4to1Mux(I[7:4], temp2,S[1:0]);
+4to1Mux({2'b00,temp2,temp1},Y, S[2]);
+endmodul</code></pre>
+            </li>
+
+
+
+            <li id="10">
+                <p><b> Decoder2to4</b></p>
+                <pre class="language-js">
+<code>module dec2_4 (a,b,en,y0,y1,y2,y3)
+input a, b, en;
+output y0,y1,y2,y3;
+assign y0= (~a) & (~b) & en;
+assign y1= (~a) & b & en;
+assign y2= a & (~ b) & en;
+assign y3= a & b & en;
+endmodul</code></pre>
+            </li>
+
+
+
+            <li id="11">
+                <p><b> Decoder3to8</b></p>
+                <pre class="language-js">
+<code>module decoder3to8(A, D);
+input [2:0] A;
+output wire [7:0] D;
+////structural coding ///
+///gate-level modeling////
+and inst0(D[0],~A[2], ~A[1],~A[0]);
+and inst1(D[1],~A[2], ~A[1],A[0]);
+and inst2(D[2],~A[2], A[1],~A[0]);
+and inst3(D[3],~A[2], A[1],A[0]);
+and inst4(D[4],A[2], ~A[1],~A[0]);
+and inst5(D[5],A[2], ~A[1],A[0]);
+and inst6(D[6],A[2], A[1],~A[0]);
+and inst7(D[7],A[2], A[1],A[0]);
+endmodule</code></pre>
+            </li>
+
+
+            <li id="12">
+                <p><b> 4*16 decoder using 2*4</b></p>
+                <pre class="language-js">
+<code>Module decoder4to16(A,D)
+input [3:0]A;
+Output wire [15:0]D;
+Wire  [3:0]Y;
+         
+Dec2to4_withE inst1(A[1:0], D[3:0], Y[0]);
+Dec2to4_withE inst2(A[1:0], D[7:3], Y[1]);
+Dec2to4_withE inst3(A[1:0], D[11:8], Y[2]);
+Dec2to4_withE inst4(A[1:0], D[15:12], Y[3]);
+Dec2to4_withE inst5(A[3:2], Y, 1’b1);
+Endmodul</code></pre>
+            </li>
+
+
+
+            <li id="13">
+                <p><b> 4*16 decoder using 3*8</b></p>
+                <pre class="language-js">
+<code>Module decoder4to16(A,D)
+input [3:0]A;
+Output wire [15:0]D;
+Wire  [1:0]Y;
+Dec3to8 inst1(A[2:0], D[7:0], Y[0]);
+Dec3to8 inst2(A[2:0], D[15:8], Y[1]);
+Dec1to2 inst3(A[3],Y);
+Endmodule</code></pre>
+            </li>
+
+
+
+            <li id="14">
+                <p><b>Full Adder Using Decoder and OR-gate</b> </p>
+                <pre class="language-js">
+<code>module FA(X, Y, Cin, Cout, Sum);
+input X, Y, Cin;
+output wire Cout, Sum;
+wire [7:0] D;
+///structural coding///////////
+decoder3to8 inst0({X, Y, Cin}, D);
+or inst1(Cout, D[3], D[5], D[6], D[7]);
+or inst2(Sum, D[1], D[2], D[4], D[7]);
+endmodule </code></pre>
+            </li>
+
+
+
+            <li id="15">
+                <p><b>4-bit_RCA</b> </p>
+                <pre class="language-js">
+<code>module fourbitRCA(A, B, Cin, Cout, Sum);
+input [3:0] A, B;
+input Cin;
+output wire Cout;
+output wire [3:0] Sum;
+wire tempC1, tempC2, tempC3;
+///////////structural coding///////////
+//////////FA= Full Adder/////////
+FA inst0(A[0], B[0], Cin, tempC1, Sum[0]);
+FA inst1(A[1], B[1], tempC1, tempC2, Sum[1]);
+FA inst2(A[2], B[2], tempC2, tempC3, Sum[2]);
+FA inst3(A[3], B[3], tempC3, Cout, Sum[3]);
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="16">
+                <p><b> D flip flop</b> </p>
+                <pre class="language-js">
+<code>module DFF(D, clk, Q, Reset);
+input D, clk, Reset;
+output reg Q;
+///behavioral modeling to be used for D-Flipflop///////
+////synchronous reset/////
+always@(posedge clk)
+begin
+    if (Reset == 1'b1)
+        Q <= 1'b0;
+    else
+        Q <= D;
+end
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="17">
+                <p><b>Counter_4bit</b> </p>
+                <pre class="language-js">
+<code>module DFF(D, clk, Q, Reset);
+input D, clk, Reset;
+output reg Q;
+///behavioral modeling to be used for D-Flipflop
+////synchronous reset///
+always@(posedge clk)
+begin
+    if (Reset == 1'b1)
+        Q<= 1'b0;
+    else
+        Q <= D;
+end
+endmodule
+
+///////////////////////////////////////////////
+
+module counter4bit(clk, Reset, Enable, Update, newvalue, Q);
+input clk, Reset, Enable, Update;
+input [3:0] newvalue;
+output wire [3:0] Q;
+wire [3:0] Sum, D, Y;
+wire Cout;
+DFF inst0(D[3], clk, Q[3], Reset);
+DFF inst1(D[2], clk, Q[2], Reset);
+DFF inst2(D[1], clk, Q[1], Reset);
+DFF inst3(D[0], clk, Q[0], Reset);
+////MUX function///////
+assign D = (Update==1'b1)?newvalue:Sum;
+///you have to add 4-bitRCA component here before you use it//////
+fourbitRCA inst4(Q, Y, 1'b0, Cout, Sum);
+//MUX function///////////
+assign Y = (Enable==1'b1)?4'b0001:4'b0000;
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="18">
+                <p><b>Counter_4bit_(Time generator)</b> </p>
+                <pre class="language-js">
+<code>module DFF(D, clk, Q, Reset);
+input D, clk, Reset;
+output reg Q;
+///behavioral modeling to be used for D-Flipflop
+////synchronous reset///
+always@(posedge clk)
+begin
+    if (Reset == 1'b1)
+        Q<= 1'b0;
+    else
+        Q <= D;
+end
+endmodule
+
+///////////////////////////////////////////////
+
+module counter4bit(clk, Reset, Q, T0, T1, T2, T3, T4);
+input clk, Reset;
+output wire [3:0] Q;
+output wire T0, T1, T2, T3, T4;
+wire [3:0] Sum, D;
+wire Cout;
+DFF inst0(D[3], clk, Q[3], Reset);
+DFF inst1(D[2], clk, Q[2], Reset);
+DFF inst2(D[1], clk, Q[1], Reset);
+DFF inst3(D[0], clk, Q[0], Reset);
+
+////MUX function///////
+assign D = (T4==1'b1)?4'b0000:Sum;
+
+///you have to add 4-bitRCA component here before you use it//////
+fourbitRCA inst4(Q, 4'b0001, 1'b0, Cout, Sum);
+////Decoder kind of function///////
+assign T0 = (Q==4'b0000)?1'b1:1'b0;
+assign T1 = (Q==4'b0001)?1'b1:1'b0;
+assign T2 = (Q==4'b0010)?1'b1:1'b0;
+assign T3 = (Q==4'b0011)?1'b1:1'b0;
+assign T4 = (Q==4'b0100)?1'b1:1'b0;
+endmodul</code></pre>
+            </li>
+
+
+
+            <li id="19">
+                <p><b>Decoder_4to16with_Enable</b> </p>
+                <pre class="language-js">
+<code>module Dec4to16withE(E, S, D);
+input E;
+input [3:0] S;
+output wire [15:0] D;
+assign D[0] = (S==4'b0000)? E : 1'b0;
+assign D[1] = (S==4'b0001)? E : 1'b0;
+assign D[2] = (S==4'b0010)? E : 1'b0;
+assign D[3] = (S==4'b0011)? E : 1'b0;
+assign D[4] = (S==4'b0100)? E : 1'b0;
+assign D[5] = (S==4'b0101)? E : 1'b0;
+assign D[6] = (S==4'b0110)? E : 1'b0;
+assign D[7] = (S==4'b0111)? E : 1'b0;
+assign D[8] = (S==4'b1000)? E : 1'b0;
+assign D[9] = (S==4'b1001)? E : 1'b0;
+assign D[10] = (S==4'b1010)? E : 1'b0;
+assign D[11] = (S==4'b1011)? E : 1'b0;
+assign D[12] = (S==4'b1100)? E : 1'b0;
+assign D[13] = (S==4'b1101)? E : 1'b0;
+assign D[14] = (S==4'b1110)? E : 1'b0;
+assign D[15] = (S==4'b1111)? E : 1'b0;
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="20">
+                <p><b>MUX16to1_8bit</b> </p>
+                <pre class="language-js">
+<code>module MUX16to1_8bit(Inp15, Inp14, Inp13, Inp12, Inp11, Inp10, Inp9, Inp8, Inp7, Inp6, Inp5, Inp4,Inp3, Inp2, Inp1, Inp0, S, Y);
+input [7:0] Inp15, Inp14, Inp13, Inp12, Inp11, Inp10, Inp9, Inp8, Inp7, Inp6, Inp5, Inp4, Inp3, Inp2, Inp1Inp0;
+input [3:0] S;
+output [7:0] Y;
+assign Y = (S == 4'b0000)? Inp0 : 8'bz;
+assign Y = (S == 4'b0001)? Inp1 : 8'bz;
+assign Y = (S == 4'b0010)? Inp2 : 8'bz;
+assign Y = (S == 4'b0011)? Inp3 : 8'bz;
+assign Y = (S == 4'b0100)? Inp4 : 8'bz;
+assign Y = (S == 4'b0101)? Inp5 : 8'bz;
+assign Y = (S == 4'b0110)? Inp6 : 8'bz;
+assign Y = (S == 4'b0111)? Inp7 : 8'bz;
+assign Y = (S == 4'b1000)? Inp8 : 8'bz;
+assign Y = (S == 4'b1001)? Inp9 : 8'bz;
+assign Y = (S == 4'b1010)? Inp10 : 8'bz;
+assign Y = (S == 4'b1011)? Inp11 : 8'bz;
+assign Y = (S == 4'b1100)? Inp12 : 8'bz;
+assign Y = (S == 4'b1101)? Inp13 : 8'bz;
+assign Y = (S == 4'b1110)? Inp14 : 8'bz;
+assign Y = (S == 4'b1111)? Inp15 : 8'bz;
+endmodule </code></pre>
+            </li>
+
+
+
+            <li id="21">
+                <p><b>DFF1_bit_Register</b> </p>
+                <pre class="language-js">
+<code>module DFF1bitRegister(newValue, clk, Q, Load, Reset);
+input clk, Load, Reset, newValue;
+output wire Q;
+wire temp;
+DFF inst1(temp, clk, Q, Reset);
+MUX2t01 inst2(Load, {newValue, Q}, temp);
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="22">
+                <p><b>MUX2to1_dataFlow Modeling</b> </p>
+                <pre class="language-js">
+<code>module MUX2to1(S, I, Y);
+input [1:0] I;
+input S;
+output wire Y;
+///////////////////dataflow/////
+assign Y = (S==1'b1)? I[1]: I[0];
+endmodule </code></pre>
+            </li>
+
+
+
+            <li id="23">
+                <p><b>Register_1bit_SynR</b> </p>
+                <pre class="language-js">
+<code>module Register1bitSynR(newValue, clk, Q, W, R, Reset);
+input clk, W, R, Reset, newValue;
+output wire Q;
+wire temp, temp1;
+wire Qinter
+DFF inst1(temp, clk, Qinter, Reset);
+///////MUX2to1_dataFlow Modeling/////////
+MUX2to1 inst2(W, {newValue, Qinter}, temp);
+DFF inst3(temp1, clk, Q, Reset);
+//////MUX2to1_dataFlow Modeling/////////
+MUX2to1 inst4(R, {Qinter, Q}, temp1);
+endmodule </code></pre>
+            </li>
+
+
+
+            <li id="24">
+                <p><b>Register_8bit</b> </p>
+                <pre class="language-js">
+<code>module Register8bit(W, R, Datain, clk, Reset, Qout);
+input W, R, clk, Reset;
+input [7:0] Datain;
+output wire [7:0] Qout;
+/////////Register_1bit_SynR///////
+Register1bitSynR inst0(Datain[0], clk, Qout[0], W, R, Reset);
+Register1bitSynR inst1(Datain[1], clk, Qout[1], W, R, Reset);
+Register1bitSynR inst2(Datain[2], clk, Qout[2], W, R, Reset);
+Register1bitSynR inst3(Datain[3], clk, Qout[3], W, R, Reset);
+Register1bitSynR inst4(Datain[4], clk, Qout[4], W, R, Reset);
+Register1bitSynR inst5(Datain[5], clk, Qout[5], W, R, Reset);
+Register1bitSynR inst6(Datain[6], clk, Qout[6], W, R, Reset);
+Register1bitSynR inst7(Datain[7], clk, Qout[7], W, R, Reset);
+endmodule </code></pre>
+            </li>
+
+
+
+            <li id="25">
+                <p><b>RegisterFile</b> </p>
+                <pre class="language-js">
+<code>input W, R, clk, Reset;
+input [3:0] AddW, AddR1, AddR2;
+input [7:0] Datain;
+output wire [7:0] Rx, Ry;
+wire [15:0] D;
+wire [7:0] Inp15, Inp14, Inp13, Inp12, Inp11, Inp10, Inp9, Inp8, Inp7, Inp6, Inp5, Inp4, Inp3, Inp2, Inp1,Inp0;
+/////////Dec4to16withE///////
+Dec4to16withE inst0(W, AddW, D);
+
+//////MUX16to1_8bit/////////
+MUX16to1_8bit(Inp15, Inp14, Inp13, Inp12, Inp11, Inp10, Inp9, Inp8, Inp7, Inp6, Inp5, Inp4, Inp3, Inp2, Inp1, Inp0, AddR1, Rx);
+MUX16to1_8bit(Inp15, Inp14, Inp13, Inp12, Inp11, Inp10, Inp9, Inp8, Inp7, Inp6, Inp5, Inp4, Inp3, Inp2, Inp1, Inp0, AddR2, Ry);
+
+//////////Register8bit/////////
+Register8bit inst20(D[0], R, Datain, clk, Reset, Inp0);
+Register8bit inst21(D[1], R, Datain, clk, Reset, Inp1);
+Register8bit inst22(D[2], R, Datain, clk, Reset, Inp2);
+Register8bit inst23(D[3], R, Datain, clk, Reset, Inp3);
+Register8bit inst24(D[4], R, Datain, clk, Reset, Inp4);
+Register8bit inst25(D[5], R, Datain, clk, Reset, Inp5);
+Register8bit inst26(D[6], R, Datain, clk, Reset, Inp6);
+Register8bit inst27(D[7], R, Datain, clk, Reset, Inp7);
+Register8bit inst28(D[8], R, Datain, clk, Reset, Inp8);
+Register8bit inst29(D[9], R, Datain, clk, Reset, Inp9);
+Register8bit inst30(D[10], R, Datain, clk, Reset, Inp10);
+Register8bit inst31(D[11], R, Datain, clk, Reset, Inp11);
+Register8bit inst32(D[12], R, Datain, clk, Reset, Inp12);
+Register8bit inst33(D[13], R, Datain, clk, Reset, Inp13);
+Register8bit inst34(D[14], R, Datain, clk, Reset, Inp14);
+Register8bit inst35(D[15], R, Datain, clk, Reset, Inp15);
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="26">
+                <p><b>Shifter_left</b> </p>
+                <pre class="language-js">
+<code>module ShifterL(Operand1, Operand2, YShiftL, CShiftL);
+input [7:0] Operand1, Operand2;
+output wire [7:0] YShiftL;
+output wire CShiftL;
+assign YShiftL = (Operand2[2:0] == 3'b000)? Operand1 : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b001)? {Operand1[6:0], 1'b0} : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b010)? {Operand1[5:0], 2'b00} : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b011)? {Operand1[4:0], 3'b000} : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b100)? {Operand1[3:0], 4'b0000} : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b101)? {Operand1[2:0], 5'b00000} : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b110)? {Operand1[1:0], 6'b000000} : 8'bz;
+assign YShiftL = (Operand2[2:0] == 3'b111)? {Operand1[0], 7'b0000000} : 8'bz;
+assign CShiftL = Operand1[7];
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="27">
+                <p><b>Shifter_right</b> </p>
+                <pre class="language-js">
+<code>module ShifterR(Operand1, Operand2, YShiftR, CShiftR);
+input [7:0] Operand1, Operand2;
+output wire [7:0] YShiftR;
+output wire CShiftR;
+assign YShiftR = (Operand2[2:0] == 3'b000)? Operand1 : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b001)? {1'b0, Operand1[7:1]} : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b010)? {2'b00, Operand1[7:2]} : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b011)? {3'b000, Operand1[7:3]} : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b100)? {4'b0000, Operand1[7:4]} : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b101)? {5'b00000, Operand1[7:5]} : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b110)? {6'b000000, Operand1[7:6]} : 8'bz;
+assign YShiftR = (Operand2[2:0] == 3'b111)? {7'b0000000, Operand1[7]} : 8'bz;
+assign CShiftR = Operand1[0];
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="28">
+                <p><b>Memory Generic Code(Data_memory)</b> </p>
+                <pre class="language-js">
+<code>module data_memory (clk, reset, wr, rd, data_in, address_bus, data_out);
+input clk, reset, rd, wr;
+input [7:0] data_in;
+input [3:0] address_bus;
+output reg [7:0] data_out;
+////Single-port-write and Single-port-read data memory
+reg [7:0] data_mem [0:15];
+always@(posedge clk)
+    begin
+        if(reset == 1'b1)
+            begin
+                data_out <= 8'b0000000;
+    ///Virtual////////////
+    $readmemh("dataformemory.txt", data_mem);
+            end
+        else
+            begin
+                if(rd==1'b1)
+                    begin
+                        data_out1 <= data_mem[address_bus];
+                    end
+                if(wr==1'b1)
+                    begin
+                        data_mem[address_bus] <= data_in;
+                    end
+            end
+    end
+//////////////////////////////////
+// initial
+// begin
+// $readmemh("dataformemory.txt", data_mem);
+// end
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="29">
+                <p><b>unsigned_comparator_4bit</b> </p>
+                <pre class="language-js">
+<code>module unsigned_comp4bit (A, B, AeB, AgB, BgA);
+input [3:0] A, B;
+output wire AeB, AgB, BgA;
+wire [3:0] exnoranswers;
+
+assign exnoranswers[3] = ~(A[3]^B[3]);
+assign exnoranswers[2] = ~(A[2]^B[2]);
+assign exnoranswers[1] = ~(A[1]^B[1]);
+assign exnoranswers[0] = ~(A[0]^B[0]);
+
+assign AeB = exnoranswers[3] & exnoranswers[2] & exnoranswers[1] & exnoranswers[0];
+
+assign AgB = A[3]&~B[3] | exnoranswers[3]&A[2]&~B[2] |
+exnoranswers[3]&exnoranswers[2]&A[1]&~B[1] |
+exnoranswers[3]&exnoranswers[2]&exnoranswers[1]&A[0]&~B[0];
+
+assign BgA = B[3]&~A[3] | exnoranswers[3]&B[2]&~A[2] |
+exnoranswers[3]&exnoranswers[2]&B[1]&~A[1] |
+exnoranswers[3]&exnoranswers[2]&exnoranswers[1]&B[0]&~A[0];
+
+endmodule</code></pre>
+            </li>
+
+
+
+            <li id="30">
+                <p><b>FSM_Method1</b> </p>
+                <pre class="language-js">
+<code>module FSM(clk, Reset, w, z, PresentState);input clk, w, Reset;output wire z;output wire [1:0] PresentState;wire [1:0] NextState;wire [7:0] D;//Registers/FFs///////////DFF inst1 (clk, Reset, NextState[0], PresentState[0]);DFF inst2 (clk, Reset, NextState[1], PresentState[1]);///////////////////////Combinational Next-stateLogic/////Dec3to8 inst3 ({w,PresentState[1],PresentState[0]}, D);assign NextState[1] = D[0] | D[3] | D[5] | D[6];or inst4(NextState[0], D[0], D[2], D[4], D[6]);//////////Combinational OutputLogic//////////assign z = (PresentState==2'b10)? 1'b1:1'b0;endmodule</code></pre>
+            </li>
+
+
+
+            <li id="31">
+                <p><b>FSM_Method2</b> </p>
+                <pre class="language-js">
+<code>module FSM_method2(clk, Reset, w, z, PresentState);
+input clk, w, Reset;
+output reg z;
+output wire [1:0] PresentState;
+wire [1:0] NextState;
+wire [7:0] D;
+//Registers/FFs///////////
+DFF inst1 (clk, Reset, NextState[0], PresentState[0]);
+DFF inst2 (clk, Reset, NextState[1], PresentState[1]);
+///////////////////////Combinational Next-stateLogic/////
+Mux8to1_1bit inst4 ({w,PresentState[1],PresentState[0]}, 8'b01101001, NextState[1]);
+Mux8to1_1bit inst5 ({w,PresentState[1],PresentState[0]}, 8'b01010101, NextState[0]);
+//////////Combinational OutputLogic//////////
+    always@(*)
+        begin
+        //z = (PresentState==2'b10)? 1'b1:1'b0;
+        //z = PresentState[1] & (~PresentState[0]);
+            if (PresentState==2'b10)
+                z = 1'b1;
+            else
+                z = 1'b0;
+        endendmodule</code></pre>
+            </li>
+
+
+
+            <li id="32">
+                <p><b>FSM_Method3</b> </p>
+                <pre class="language-js">
+<code>module FSM_method3(clk, Reset, w, z, PresentState);
+input clk, w, Reset;
+output wire z;
+output wire [1:0] PresentState;
+wire [1:0] NextState;
+wire [7:0] D;
+wire [1:0] Inp3, Inp2, Inp1, Inp0;
+
+//Registers/FFs///////////
+DFF inst1 (clk, Reset, NextState[0], PresentState[0]);
+DFF inst2 (clk, Reset, NextState[1], PresentState[1]);
+
+///////////////////////Combinational Next-stateLogic/////
+Mux4to1_2bit inst4 (PresentState[1:0], Inp3, Inp2, Inp1, Inp0, NextState[1:0]);
+Mux2to1_2bit inst5 (w, 2'b01, 2'b11, Inp0);
+Mux2to1_2bit inst6 (w, 2'b10, 2'b00, Inp1);
+Mux2to1_2bit inst7 (w, 2'b11, 2'b01, Inp2);
+Mux2to1_2bit inst8 (w, 2'b00, 2'b10, Inp3);
+
+//////////Combinational OutputLogic//////////
+Mux8to1_1bit inst9 ({1'b0,PresentState[1],PresentState[0]}, 8'b00000100, z);
+endmodule</code></pre>
+            </li>
+
+        </ol>
+    </div>
+</body>
+
+</html>
