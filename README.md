@@ -65,7 +65,7 @@ You can access the interactive cheat sheet through the following GitHub Pages li
 
 ## Usage Instructions
 
-1. **Navigate to the Cheat Sheet**: Visit the [Cheatsheet For All Verilog Code](https://klsavaj.github.io/VerilogCode-All-Modules-COA-Notes/).
+1. **Navigate to the Cheat Sheet**: Visit the [Cheatsheet For All Verilog Code](https://klsavaj.github.io/Computer-Architecture-VerilogCodes-Sheet/).
 
 2. **Select the Desired Module**: Click on the topic corresponding to the Verilog code you need. This will direct you to the specific code snippet.
 
