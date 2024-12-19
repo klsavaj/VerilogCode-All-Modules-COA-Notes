@@ -61,7 +61,7 @@ The repository includes Verilog codes for the following modules:
 
 You can access the interactive cheat sheet through the following GitHub Pages link:
 
-[Cheatsheet For All Verilog Code](https://klsavaj.github.io/VerilogCode-All-Modules-COA-Notes/)
+[Cheatsheet For All Verilog Code](https://klsavaj.github.io/Computer-Architecture-VerilogCodes-Sheet/)
 
 ## Usage Instructions
 
